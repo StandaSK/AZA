@@ -1,6 +1,56 @@
 // uloha-1.cpp -- Uloha 1
 // Stanislav Jakubek, 5.4.2016 14:12:33
 
+/*
+Zadanie:
+Úlohou je pre daný neorientovaný neohodnotený graf bez slučiek a násobných hrán zistiť dĺžku najkratšej kružnice, ktorú tento graf obsahuje. (Tento invariant sa nazýva obvod grafu.)
+Kružnica v grafe je postupnosť vrcholov v0, v1, ..., vk taká, že medzi vrcholmi vi a vi+1 je hrana pre každé i z množiny {0, 1, ..., k} (vk+1 = v0); jej dĺžka je počet jej vrcholov. Ak graf žiadnu kružnicu neobsahuje, na výstup treba vypísať -1.
+Váš program by mal čítať dáta zo štandardného vstupu a písať výsledky na štandardný výstup.
+Program by mal skončiť do 5 sekúnd aj pre grafy s desiatkami tisíc hrán.
+
+Formát vstupu
+Na vstupe je v prvom riadku nezáporné celé číslo k udávajúce počet grafov na vstupe. Nasleduje k grafov; pred každým grafom je jeden prázdny riadok. Graf začína riadkom, v ktorom je počet jeho vrcholov, a potom nasleduje pre každý vrchol jeden riadok: prvé číslo v riadku je počet susedov daného vrchola a za ním nasledujú čísla týchto susedov; čísla v riadku sú oddelené medzerami. Vrcholy grafu sú číslované celými číslami od 1 nahor.
+
+Príklad vstupu:
+4
+
+5
+0
+0
+0
+1 5
+1 4
+
+3
+2 2 3
+2 1 3
+2 1 2
+
+4
+2 2 4
+2 1 3
+2 2 4
+2 1 3
+
+8
+3 2 7 8
+2 1 3
+2 2 4
+2 3 5
+2 4 6
+3 5 7 8
+2 1 6
+2 1 6
+
+Formát výstupu
+Pre každý graf na vstupe jediný riadok s jediným číslom, ktoré udáva dĺžku najkratšej kružnice.
+Príklad výstupu (zodpovedá vstupu vyššie):
+-1
+3
+4
+4
+*/
+
 #include <stdio.h>
 #include <algorithm>
 using namespace std;
