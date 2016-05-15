@@ -4,23 +4,16 @@
 #include <stdio.h>
 #include <algorithm>
 
-/*
-static bool DEBUG_INPUT = false;
-static bool DEBUG_CYCLE = false;
-static bool DEBUG_OUTPUT = false;
-static bool DEBUG_ADD_FRONT = false;
-*/
-
 typedef struct cesta {
-  int a,b;	//aktualna poloha
-  int dlzka;	//aktualna dlzka
-  struct cesta *pred;	//predchadzajuci clen
+  int a,b;
+  int dlzka;
+  struct cesta *pred;
 } CESTA;
 
 typedef struct front {
-  int dlzka;	//aktualna dlzka
-  struct front *dalsi;	//nasledujuci clen frontu
-  CESTA *cesta;	//aktualna cesta
+  int dlzka;
+  struct front *dalsi;
+  CESTA *cesta;
 } FRONT;
 
 typedef struct vrchol {
@@ -37,10 +30,10 @@ void addFront(FRONT **front, int **pomMapa, int K, int a, int b) {
   int predB = (*front)->cesta->b;
   
   /* Zistenie dlzky cesty */
-  if ((a - predA) == 1) { dlzkaCesty = pomMapa[2*predA+1][b]; }		//posun dole
-  else if ((a - predA) == -1) { dlzkaCesty = pomMapa[2*a+1][b]; }	//posun hore
-  else if ((b - predB) == 1) { dlzkaCesty = pomMapa[2*a][predB]; }	//posun doprava
-  else if ((b - predB) == -1) { dlzkaCesty = pomMapa[2*a][b]; }		//posun dolava
+  if ((a - predA) == 1) dlzkaCesty = pomMapa[2*predA+1][b];		//posun dole
+  else if ((a - predA) == -1) dlzkaCesty = pomMapa[2*a+1][b];	//posun hore
+  else if ((b - predB) == 1) dlzkaCesty = pomMapa[2*a][predB];	//posun doprava
+  else if ((b - predB) == -1) dlzkaCesty = pomMapa[2*a][b]; 	//posun dolava
   
   //printf("Dlzka cesty z (%d,%d) do (%d,%d): %d\n", predA, predB, a, b, dlzkaCesty);
   
@@ -49,17 +42,15 @@ void addFront(FRONT **front, int **pomMapa, int K, int a, int b) {
   FRONT *akt = *front, *novy = NULL;
   
   /* Vytvorenie noveho clena frontu */
-  novy = NULL;
   novy = (FRONT *) malloc (sizeof(FRONT));
   novy->cesta = (CESTA *) malloc (sizeof(CESTA));
   novy->cesta->a = a;
   novy->cesta->b = b;
   novy->cesta->pred = (*front)->cesta;
   novy->dlzka = (*front)->dlzka + dlzkaCesty;
-  akt = (*front);
   
   while (akt->dalsi != NULL) {
-    if (novy->dlzka < akt->dalsi->dlzka) { break; }
+    if (novy->dlzka < akt->dalsi->dlzka) break;
     akt = akt->dalsi;
   }
   
@@ -77,28 +68,17 @@ int main() {
   
   for (i = 0; i < N; i++) {
     scanf("%d ", &K);
-    //if (DEBUG_INPUT) printf("\nK: %d 2K-1: %d\n", K, (2*K-1));
     int **values;
     
     values = new int *[2*K-1];
-    for (k = 0; k < (2*K-1); k++) { values[k] = new int[K]; }
+    for (k = 0; k < (2*K-1); k++) values[k] = new int[K];
     
     /* Nacitanie hodnot do pola */
     for (j = 0; j < (2*K-1); j++) {
-      if ((j%2) == 0) {
-        for (l = 0; l < (K-1); l++) {
-          scanf("%d ", &values[j][l]);
-          //if (DEBUG_INPUT) printf("%d ", values[j][l]);
-        }
-        //if (DEBUG_INPUT) printf("\n");
-      }
-      else {
-        for (l = 0; l < K; l++) {
-          scanf("%d ", &values[j][l]);
-          //if (DEBUG_INPUT) printf("%d ", values[j][l]);
-        }
-        //if (DEBUG_INPUT) printf("\n");
-      }
+      if ((j%2) == 0)
+        for (l = 0; l < (K-1); l++) scanf("%d ", &values[j][l]);
+      else
+        for (l = 0; l < K; l++) scanf("%d ", &values[j][l]);
     }
     
     /* Algoritmus */
@@ -116,7 +96,6 @@ int main() {
       }
     }
     
-    front = NULL;
     front = (FRONT *) malloc (sizeof(FRONT));
     front->cesta = (CESTA *) malloc (sizeof(CESTA));
     front->cesta->a = 0;
@@ -131,17 +110,13 @@ int main() {
       a = front->cesta->a;
       b = front->cesta->b;
       
-      //printf("P: (%d,%d) D: %d\n", a, b, front->dlzka);
-      
       /* Ak uz nasiel koncovy bod */
       if ((a == K-1) && (b == K-1)) {
-        //if (DEBUG_CYCLE) printf("Nasiel sa koncovy bod\n");
         cesta = front->dlzka;
         break;
       }
       
       /* Pridavanie do frontu */
-      //if (DEBUG_CYCLE) printf("Pridavanie do frontu\n");
       if (a == 0) {
         //if (DEBUG_CYCLE) printf("a == 0\n");
         if (!pomMapa[a][b]->d) { addFront(&front, values, K, a+1, b); pomMapa[a][b]->d = true; }
@@ -229,9 +204,7 @@ int main() {
     //printf(cesta ? "true" : "false");
     
     /* Vypis */
-    //if (DEBUG_OUTPUT) printf("Koncovy vypis\n");
     printf("%d\n", cesta);
   }
-  
   return 0;
 }
