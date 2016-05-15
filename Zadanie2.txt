@@ -1,0 +1,51 @@
+Úlohy: Úloha 2 - Úloha 2-1
+
+Cestá sieť v meste má tvar štvorcovej mriežky s rozmermi <=1000x1000, kde ulice idú buď zo severu na juh, alebo z východu na západ. Na vnútorných križovatkách (t.j. takých, z ktorých sa dá pokračovať 4-mi smermi) sa nemôže odbočovať vľavo a na žiadnej križovatke sa nedá otáčať. Mesto trpí častými zápchami. Pre každú cestu spájajúcu dve križovatky dostaneme na vstupe čas prejazdu (pre zjednodušenie budeme predpokladať, že čas prejazdu oboma smermi je rovnaký), pričom čas prejazdu bude celé číslo <=2000. Cieľom je nájsť čo najkratšiu zo severozápadného rohu mesta do juhovýchodného rohu mesta.
+Hodnotenie
+
+Váš program by mal čítať dáta zo štandardného vstupu a písať výsledky na štandardný výstup. Úloha existuje v dvoch náročnostiach. Každá náročnosť obsahuje niekoľko malých vstupov, ktoré by celkový čas behu programu nemali ovplyvniť a tri veľké vstupy, ktorých veľkosť závisí od obtiažnosti. Pre každú obtiažnosť je časový limit na výpočet 0.5s. Toto sú veľkosti vstupov pre jednotlivé úrovne:
+
+    Úroveň 1 za 4 body: 200 x 200
+    Úroveň 2 za +3 body: 400 x 400
+
+Riešiť môžete obe úrovne, a teda získať za riešenie spolu 4+3=7 bodov. Riešenie si môžete medzi úlohami aj vylepšovať, alebo môžete použiť jedno riešenie. Vaše riešenie by malo byť originálne, prebehne kontrola originality a plagiátori, (okrem toho, že nespravia predmet), budú riešení podnetom na disciplinárnu komisiu.
+Formát vstupu
+
+Na prvom riadku vstupu sa náchadza nezáporné celé číslo - počet podvstupov. Nasledujúci riadok je prázdny. Následne sa na vstupe nasleduje zodpovedajúci počet podvstupov. Za každým podvstupom sa nachádza prázdny riadok. Každý podvstup sa začína riadkom s jedným nezáporným celým číslo 2<=k<=1000 udávajúce počet veľkosť mriežky mesta. Križovatky budeme označovať usporiadanov dvojicou (i,j), kde i je vzdialenosť križovatky (v počte ciest) od severného okraju mesta a j je vzdialenosť križovatky od západného okraju mesta. Teda 0<=i,j<k. Potom nasleduje 2k-1 riadkov (očíslujme si ich 0...2k-2). Nepárne riadky obsahujú k-1 celých čísel medzi 1 a 2000. Párne riadky obsahujú k celých čísel medzi 1 a 2000. Dĺžka jazdy z križovatky (i,j) do križovatky (i,j+1) sa nachádza v riadku 2i na mieste j (0<=i<k, 0<=j<k-1; indexujeme od 0). Dĺžka jazdy z križovatky (i,j) do križovatky (i+1,j) sa nachádza v riadku 2i+1 na mieste j (0<=i<k-1, 0<=j<k; indexujeme od 0).
+
+Príklad vstupu:
+
+3
+
+2
+1 
+1 4
+3
+
+3
+1 1
+2 1 16
+3 1
+4 11 1
+5 2
+
+5
+1 1 1 1000
+1000 1000 1000 1 1000
+1000 1 1000 1000
+1000 1 1 1 1000
+1000 1 1 1
+1000 1 1 1000 1
+1000 1 1000 1000
+1000 1000 1000 1000 1
+1000 1000 1000 1000
+
+Formát výstupu
+
+Pre každý podvstup na vstupe jediný riadok s jediným číslom, ktoré udáva dĺžku najkratšej cesty z križovatky (0,0) do križovatky (k-1,k-1).
+
+Príklad výstupu (zodpovedá vstupu vyššie):
+
+4
+7
+18
