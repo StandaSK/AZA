@@ -31,7 +31,7 @@ typedef struct vrchol {
 } VRCHOL;
 
 void addFront(FRONT **front, int **pomMapa, int K, int a, int b) {
-  FRONT *akt = *front, *novy = NULL;
+  //FRONT *akt = *front, *novy = NULL;
   int dlzkaCesty;
   int predA = (*front)->cesta->a;
   int predB = (*front)->cesta->b;
@@ -42,7 +42,11 @@ void addFront(FRONT **front, int **pomMapa, int K, int a, int b) {
   else if ((b - predB) == 1) { dlzkaCesty = pomMapa[2*a][predB]; }	//posun doprava
   else if ((b - predB) == -1) { dlzkaCesty = pomMapa[2*a][b]; }		//posun dolava
   
-  printf("Dlzka cesty z (%d,%d) do (%d,%d): %d\n", predA, predB, a, b, dlzkaCesty);
+  //printf("Dlzka cesty z (%d,%d) do (%d,%d): %d\n", predA, predB, a, b, dlzkaCesty);
+  
+  //if ((*front)->dlzka + dlzkaCesty > 2000) { return; }
+  
+  FRONT *akt = *front, *novy = NULL;
   
   /* Vytvorenie noveho clena frontu */
   novy = NULL;
@@ -66,7 +70,7 @@ void addFront(FRONT **front, int **pomMapa, int K, int a, int b) {
 using namespace std;
 
 int main() {
-  int i, j, l, N, K;
+  int a, b, i, j, k, l, m, n, N, K, cesta;
   
   /* Nacitanie poctu podvstupov */
   scanf("%d ", &N);
@@ -77,7 +81,7 @@ int main() {
     int **values;
     
     values = new int *[2*K-1];
-    for (int k = 0; k < (2*K-1); k++) { values[k] = new int[K]; }
+    for (k = 0; k < (2*K-1); k++) { values[k] = new int[K]; }
     
     /* Nacitanie hodnot do pola */
     for (j = 0; j < (2*K-1); j++) {
@@ -98,14 +102,12 @@ int main() {
     }
     
     /* Algoritmus */
-    int a, b;
-    CESTA *cesta = NULL;
     FRONT *front = NULL, *temp = NULL;
     /* Pomocna mapa na zapamatanie uz navstivenych miest */
     VRCHOL *pomMapa[K][K];
     
-    for (int m = 0; m < K; m++) {
-      for (int n = 0; n < K; n++) {
+    for (m = 0; m < K; m++) {
+      for (n = 0; n < K; n++) {
         pomMapa[m][n] = (VRCHOL *) malloc (sizeof(VRCHOL));
         pomMapa[m][n]->h = false;
         pomMapa[m][n]->d = false;
@@ -129,13 +131,12 @@ int main() {
       a = front->cesta->a;
       b = front->cesta->b;
       
-      printf("P: (%d,%d) D: %d\n", a, b, front->dlzka);
+      //printf("P: (%d,%d) D: %d\n", a, b, front->dlzka);
       
       /* Ak uz nasiel koncovy bod */
       if ((a == K-1) && (b == K-1)) {
         //if (DEBUG_CYCLE) printf("Nasiel sa koncovy bod\n");
-        cesta = front->cesta;
-        cesta->dlzka = front->dlzka;
+        cesta = front->dlzka;
         break;
       }
       
@@ -225,9 +226,11 @@ int main() {
       //if (DEBUG_CYCLE) printf("Koniec terajsieho cyklu\n");
     }
     
+    //printf(cesta ? "true" : "false");
+    
     /* Vypis */
     //if (DEBUG_OUTPUT) printf("Koncovy vypis\n");
-    printf("%d\n", front->cesta->dlzka);
+    printf("%d\n", cesta);
   }
   
   return 0;
