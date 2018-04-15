@@ -1,0 +1,103 @@
+Máme reazec R nad abecedou {a, b, c}.
+Reazec Q vznikol z podreazca R' reazca R vykonaním
+nejakého mnostva nasledujúcich operácií vykonanıch na
+disjunktnıch miestach reazca R' (t.j. kadé písmenko sa
+môe zúèastni iba jednej operácie, a písmenká ktoré vznikli
+niektorou z operácií sa u nemôu zúèastòova ïalších operácií):
+
+    Pravidlo 1: aa->aaa
+    Pravidlo 2: abac->abaac
+    Pravidlo 3: baabaabaa->a
+
+Preto napríklad reazec baabaabaabacbaabaaac môeme
+pomocou operácií zmeni na reazec abacbaaabaaac
+Pravidlo 3, Pravidlo 1; ale nie na reazec abaacbaabaaac,
+pretoe to by vyadovalo aby sa jedno z a-èok zúèastnilo dvoch operácií.
+
+Nájdite polohu podreazca R' z ktorého reazec Q mohol
+vzniknú a poèet operácií potrebnıch na zmenu reazca R'
+na reazec Q. Spomedzi všetkıch kandidátov na poreazec R'
+vyberte tento poreazec tak, aby bol celkovı poèet
+operácií potrebnıch na získanie reazca Q z R' minimálny.
+V prípade rovnakého poètu operácií vráte polohu reazca R'
+najblišie k zaèiatku reazca R.
+
+Reazec R je podreazcom reazca P (je súèasou zadania),
+ktorı nie je nièím špeciálny (pre vyriešenie úlohy nie je
+potrebné vedie niè špecifické o reazci P, pre vyriešenie
+extra akého zadania je relevantá informácia, e P nie
+je nijak špeciálne zákernı).
+Formát vstupu:
+
+Reazec R nie je súèasou vstupu. Namiesto toho si ho
+vygenerujte nasledujúcou funkciou. Reazec R obsahuje
+prvıch n znakov reazca P.
+
+int Plength=1000000;
+char P[100001];
+void generateP(){
+    P[0]='a';
+    long read=0,write=1;
+    while(Plength>write) {
+        if (read % 39 ==38) read++;
+        char r=P[read++];
+        if (r=='a') {P[write++]='b';P[write++]='a';P[write++]='a';}
+        else if (r=='b') {P[write++]='a';P[write++]='c';}
+        else if (r=='c') {P[write++]='b';};
+    }
+    P[Plength]=0;
+}
+
+Prvy riadok obsahuje poèet podvstupov. Následne kadı ïalší
+riadok obsahuje jeden podvstup. Podvstup sa zaèína èíslom n
+udávajúci dåku reazca R a nasleduje reazec Q.
+Za poslednım podvstupom nasleduje prázdny riadok.
+Môete predpoklada, e 0<=n<=1000000 a dåka
+Q je <=250 (<=1000 pre bonusové zadanie).
+
+Formát vıstupu:
+
+Vıstupnı súbor obsahuje pre kadı podvstup jeden
+riadok s dvoma èísalami oddelenımi èiarkou.
+Prvé èíslo udáva polohu polohu reazca R' v R,
+druhé èíslo udáva poèet vykonanıch operácií.
+Ak takıto reazec R' neexistuje, vypíše sa na
+vıstup reazec No solution. Poslednı riadok je prázdny.
+Pamäovı limit: cca 128 MB
+
+Ukáka väèšieho vstupu:
+16
+0 a
+10 a
+10 abaaa
+10 abaaaa
+10 abaaaaa
+100 abaaacbaabaabaabacbaabaaac
+100 abaaacabacbaabaaac
+100 abaaacaabacbaabaaac
+100 abaaacabaacbaabaaac
+100 abaaacbaabaabaaabaacbaabaaac
+100 abaaaacbaaabaabaabaacbaaabaaaac
+1000000 a
+1000000 aaaaaa
+1000000 acbaabaaacbaabaaacbaabaaacbaabacbaabaaacbaabaabaabacbaabaaacbaabacbaabaaacbaabaaacbaaacbaabacbaabaaacbaabaabaabacbaabaaacbaabaabaabacbaabaaacbaabaabaabacbaabaaacbaabacbaabaaacbaabaabacbaabaaacba
+1000000 acbaabaaacbaaabaaaacbaabaaacbaabacbaabaaacbaabaaabaabacbaabaaacbaabacbaaabaaacbaabaaacbaaaacbaabacbaabaaacbaabaabaabaacbaabaaacbaabaaabaabacbaabaaacbaabaabaabacbaabaaacbaabacbaabaaacbaabaaba
+1000000 acbaaabaaaacbaaabaaaacabacbaabaaacbaabaabaabaacbaabaaaacbaaabaaaacbaaabaaaacbaabaacbaaabaaaacabacbaaabaaaacabbaaabaaaacabacbaabaaaacbaabaacbaabaaaacbaaabaaabaabaacbaabaaacbaaabaaaacbaaabaaaacacba
+
+Správny vıstup:
+No solution.
+0,0
+0,0
+0,1
+No solution.
+0,0
+0,1
+No solution.
+No solution.
+No solution.
+0,5
+0,0
+No solution.
+42470,0
+42470,7
+996061,31

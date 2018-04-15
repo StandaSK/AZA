@@ -1,0 +1,450 @@
+Plocha je štvorcová sie obsahujúcu n x m políèok.
+Kadému políèku prislúcha prirodzene dvojica (x,y), kde 0<=x<n a 0<=y<m.
+Políèka sú dvoch typov: zakázané a povolené.
+Po políèkach sa pohybuje panáèik.
+Pre jeho pohyb platia nasledujúce pravidlá.
+Ak sa zmenilo políèko panáèika v minulom ahu o (dx1, dy1),
+v nasledujúcom ahu sa môe zmeni o jednu z nasledujúcich
+hodnôt (dx2,dy2):
+(dx1-1,dy1-1), (dx1-1,dy1+0), (dx1-1,dy1+1)
+(dx1+0,dy1-1), (dx1+0,dy1+0), (dx1+0,dy1+1)
+(dx1+1,dy1-1), (dx1+1,dy1+0), (dx1+1,dy1+1),
+prièom ale dx2^2+dy2^2<=25. Panáèik nemôe vyjs mimo plochy
+ani sa dosta na zakázané políèko.
+
+Panáèik zaèína v stave ako keby jeho sa v minulom ahu zmenilo
+políèko panáèika o (0,0) a cie¾om je nájs najkratšiu cestu
+zo štartového políèka na cie¾ové políèko. V prípade,
+e takıchto ciest bude viac, vyberte takú kde je n-tica
+(x0, y0, x1, y1, x2, y2, ..., xn, yn) lexikograficky najmenšia,
+prièom xi a yi sú x-ová (riadok) a y-ová (stlpec) súradnica polohy
+panáèika po i-tom ahu.
+Formát vstupu:
+
+V prvom riadku vstupu sa nachádza poèet podvstupov, za ním
+nasleduje prázdny riadok.
+
+Následne pre kadı podvstup nasleduje:
+
+    riadok s dvoma celımi èíslami x a y udávajúcimi rozmery
+	plochy x=poèet riadkov y=poèet ståpcov, x<=150, y<=150,
+    riadok s dvoma celımi èíslami xz a yz udávajúcimi
+	poèiatoèné políèko panáèika, 0<=xz<x, 0<=yz<y,
+    riadok s dvoma celımi èíslami xk a yk udávajúcimi
+	koncové políèko panáèika, 0<=xk<x, 0<=yk<y.
+
+Nasleduje x riadkov, prièom kadı riadok obsahuje y znakov.
+Ak je v a-tom riadku a b-tom ståpci tejto èasti na vstupe
+znak 'X', znamená to, e políèko (a,b) je zakázané. V
+opaènom prípade je v a-tom riadku a b-tom ståpci tejto
+èasti na vstupe znak '.', èo znamená, e políèko je povolené.
+Na záver podvstupu nasleduje prázdny riadok.
+Formát vıstupu:
+
+Vıstup bude postupne obsahova riešenia pre jednotlivé podvstupy,
+za kadım bude riadok obsahujúci --------------------
+
+Ak podvstup nemá riešenie, vypíše sa No solution
+
+Ak podvstup má riešenie, vypíše sa x riadkov po y znakov,
+kde v a-tom riadku a b-tom ståpci je:
+
+    znak medzera (' ') ak je políèko (a,b) povolené a panáèik na òom nebol,
+    znak o ('o') ak je políèko (a,b) povolené a panáèik na òom bol,
+    znak X ('X') ak je políèko (a,b) zakázané.
+
+Pamäovı limit: cca 128 MB
+Poznámka: Uvedomte si, e na uloenie polohy a predchádzajúceho
+pohybu panáèika vám staèí 32 bitov (long).
+
+Ukákovı vstup:
+4
+
+
+
+3 10
+
+0 0
+
+2 9
+
+..........
+
+..........
+
+..........
+
+
+
+3 10
+
+0 0
+
+2 9
+...X.X.X..
+
+...X.X.X..
+
+...X.X.X..
+
+
+
+2 50
+
+0 0
+
+1 49
+
+..................................................
+
+..................................................
+
+
+
+
+2 50
+
+0 0
+
+1 48
+
+..................................................
+
+..................................................
+
+Ukákovı vıstup:
+oo o      
+      o   
+         o
+--------------------
+oooXoX X  
+   X XoX  
+   X X X o
+--------------------
+oo o  o   o    o    o    o    o    o    o    o    
+                                                 o
+--------------------
+oo o  o  o                                        
+             o    o    o    o    o    o    o    o 
+--------------------
+
+Malı vstup:
+3
+
+50 50
+0 0
+49 49
+.................XXXXXXXXXXXXXXXXX...XXXXXXXXXXXXX
+...................XXXXXXXXXXXX..........XXXXXXXXX
+.....................XXXXXXXX.............XXXXXXXX
+......................XXXXXXX..............XXXXXXX
+.......................XXXXX......XXX......XXXXXXX
+XXXXXXXXXXXXXXXXX......XXXXX.....XXXXX......XXXXXX
+XXXXXXXXXXXXXXXXXX.....XXXXX.....XXXXXX......XXXXX
+XXXXXXXXXXXXXXXXXX.....XXXXX.....XXXXXXX......XXXX
+XXXXXXXXXXXXXXXXX.....XXXXX......XXXXXXXX......XXX
+XX....................XXXXX.....XXXXXXXXXX......XX
+X....................XXXXXX....XXXXXXXXXXXX......X
+...................XXXXXXXX....XXXXXXXXXXXXX.....X
+....XXXXXXXXXXXXXXXXXXXXXXX....XXXXXXXXXXXXX.....X
+.....XXXXXXXXXXXXXXXXXXXXXX.....XXXXXXXXXXXX.....X
+X.....XXXXXXXXXXXXXXXXXXXXX......XXXXXXXXXXX.....X
+XX.....XXXXXXXXXXXXXXXXXXXX......XXXXXXXXXX......X
+XXX......XXXXXXXXXXXXXXXXXXX.....XXXXXXXX.......XX
+XXXX.....XXXXXXXXXXXXXXXXXXXX.....XXXXXXX....XXXXX
+XXXX.....XXXXXX........XXXXXX......XXXXXX....XXXXX
+XXXX.....XXXXXX.........XXXXXX......XXXXXX...XXXXX
+XXXX.....XXXXXX....XX....XXXXXX.....XXXXXX....XXXX
+XXX......XXXXXX....XXX..............XXXXXX....XXXX
+XX......XXXXXXX....XXXX.............XXXXXX....XXXX
+X......XXXXXXXX....XXXXX...........XXXXXX....XXXXX
+......XXXXXXXX.....XXXXXX.......XXXXXXXXX....XXXXX
+.....XXXXXXXXX.....XXXXXXXXXXXXXXXXXXXX......XXXXX
+.....XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX.....XXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX....XXXXXXXXXX
+.....XXXXXXXXX.....XXXXXXXXXXXXXXXXX....XXXXXXXXXX
+.....XXXXXXXXX.....XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+.....XXXXXXXXX.....XXXXXXXXXXXXXXXXX....XXXXXXXXXX
+.....XXXXXXXXX.....XXXXXXXXXXXXXXXXXX.............
+.....XXXXXXXXX.....XXXXXXXXXXXXXXXXXXX............
+.....XXXXXXXXX.....XXXXXXXXXXXXXXXXXXXXXXXXXXX....
+XXXXXXXXXXXXXX.....XXXXXXXXXXXXXXXXXXXXXXXXXXX....
+XXXXXXXXXXXXXX.....XXXXXXXXXXXXXXXXXXXXXXXXXXX....
+XXXXXXXXXXXXXX.....XXXXXXXXXXXXXXXXXXXXXXXXXXX....
+.....XXXXXXXXX...................XXXXXXXXXXXXX....
+.....XXXXXXXXX...................XXXXX............
+.....XXXXXXXXX...................XXXXX............
+......XXXXXXXX...................XXXXX............
+X......XXXXXXXXXXXXXXXXXXX.......XXXXX....XXXXXXXX
+XX.......XXXXXXXXXXXXXXXXX.......XXXXX....XXXXXXXX
+XXX........XXXXXXXXXXXXXXX.......XXXXX....XXXXXXXX
+XXXX.........XXXXXXXXXXXXX.......XXXXX....XXXXXXXX
+XXXXXX.........XXXXXXXXXXX.......XXXXX....XXXXXXXX
+XXXXXXXX.........................XXXXX............
+XXXXXXXXXX.......................XXXXX............
+XXXXXXXXXXXX.....................XXXXX............
+
+50 50
+0 0
+49 49
+..X..XXXXXXXX...X.XX..XX.XXX.XX.XXXX....X.X...XXX.
+X.XXX.XXX..X..X...X...XX.XX.XXXXXX...XXXXX.XXXXX.X
+.X....XX.XXXXXXXXXXXXX....XX.XX.X..XXXXXXX.XX.XX..
+X.X..X.X.XX.XXXXXXXX.X..XXXXXXX..XXXX...X....XX.X.
+X..X.....XXX....XX...X.XXXXX..X..XX....X.XX..XXXXX
+XX..X...XX.X...XXX..XXX.XXX.X.X..X.XX.XXXX.XXXX.XX
+X...XXXXX..XX.XXX..XXX..X.X...XXXX..XXX.X.XX.XX.XX
+X.XXX.X.X.XXXXXX...XXXXXXX.XXX.XXXX.XXXXXX.XX.XXXX
+.X.XX..X.XXXX...XXXX.XX.XXXXXXX....XXXXX.XXXXX.XXX
+...X.XXX..X.X.XX.XXXX..XXX.X.X.X.XXXXX.XXXXXX.XX.X
+.X.XXX...X.XXX.X.......X.XX..XX..X.XXX..X.XX.XX...
+XX.X....XX.XX.XX.XXXXXXX.XXX.XXX.X..XX.XX.XX.X.XX.
+...XXX.XX.X.......X..XXXXXX.X....XX.X.XXX...X.X...
+..XX...XX.X.X..XX.XXX..X..XX.XXX..XXXX.XXXXX...X..
+XXX.....X.....X.X..XXX.XXX...X....X.XX.XX..X..X.X.
+XXXX...X...X.XXX.XXX.X..X...XX.X...XXX.X..X.XXXX.X
+..XXXXXX.X....XX.XXXX..XX..X..XXX.XX.X.X.X.XX.X.X.
+X.XX..XXXXX.X.X.XXXXX..XX.XXXXXXX..XXXX...XXXXX.XX
+X.XXX..XXX.XXXX.XXX.X..X.....XXX.XXX...XXXXXX.X.XX
+XXX..XX.X....X......X..X.XXXXX....X.X.X...X.X.XXX.
+.X.X..XXX..X..X.XX.XX.XX.X..XXXXX.X.XXX..XX.XXXXX.
+.XXXXX.X.XX..XX.X.X..X..XX.X.XXXX.XX.XX.X..X.X..XX
+XXXXXXX.XX..X.XX.XXXXXXXXXXXXX.XX.XX.....X..XXXXX.
+XXXXX.XXXXX.X..XX.X.XXXXXX.XXX.XXX.XX.X...XXX..XXX
+.X.X...XX..X.......X..XXXXXX.XXXX.XXX..X.XXXX..XX.
+...XXX.XXX.XXX.XX.XXX.X.X.X..X..X..X..XX.XXX.X.X..
+XXXXXX...X...X.X.X..XXXXXX.XXX.X.XX.XXXXXXX..XXXX.
+.XX.X.X.XXX.X..X..XX.XX..XXXXXX..X.X.X...XX.XX..X.
+XXXX.X.X.XXXXXXXX..X.X..XXX...XXX.XX...X.XXX.XXXX.
+..XX.XXXX.X.XX.X.X...X.XXX.XX.XXXX...XXXX...XXXXX.
+.X.X..X.X...X.X.XXXXXXXXX..X.XXXXXX.XXX.XX.XX..X.X
+XXX..XXXX..XX.XX....XXX..X...XX.XX..X.XX..X.X...X.
+XX.X.X.XXX..XXX.X.X.X...X.XX...XXXXXXXXX.XXX.XX..X
+XX.X.X.XX.X.XX...X..X..XX.X.XXX...XX.XXXXXX..X.XX.
+XXXXXX.XXXX..X.X..XXXXX.XX.XXXXXX.X.X.X.X.XXXXX..X
+XXX..XXXXXXXXX.XXXXXX.XXXXXX.X...X.XXX..XXX.X..X.X
+.XX..XXX..XX.XXXXXX.XXXXXXXX.XX.X...XX.X...XX..X..
+.XXX.XX......XX...XX.XXXXX.X.XXXXXXX..XX....XXXX.X
+XX.XXXX.X..X..X.X...XX.XX..X.XX....XX.XX.XXXX..X.X
+..XXXXX.XXXX.XXXXXX.....X...XXXX.XX..XXXX.X....XXX
+..X.X..XXXX..XXX.XXXXXX.X.XXXXXXX.XXX.XXX...XXX.XX
+XXX.XXXXX..XXXX.X..X.X...XXX....X.X.X.XX.XXX..X.XX
+XXXXX...X..XX..XX.X.XXX.XXX.X.XXX....X..X..XXXXX.X
+X.X...X.X.X.XXX.X..X..X..XX..XX.X.XXXXXXX..XXXX..X
+..XX..X.X.X.XXX.......XX..X....X.XX...X.XX.XXX.X..
+..XXXX.XX..X.XXX..XXX.X.XX.XXX......XX.X...X.XXX.X
+XX..XXX.X..XXXXXX.XXXXX..XX........XX.X.XX..XX..XX
+XXXXX.XX.XX.X..X...X.XXX.XXXX.XXX.XXX..XXXXXXXX.X.
+.X.XX..XX.XXXXXXXXX.X..XX.X.XXXX.XXXXXX.XX.X..X...
+...XXX..X.XXXX...XXXXX.X.XXXXXX.XX.XXX..XXXXXXXXX.
+
+100 100
+0 0
+99 99
+....................................................................................................
+....................................................................................................
+....................................................................................................
+....................................................................................................
+....................................................................................................
+....................................................................................................
+....................................................................................................
+....................................................................................................
+....................................................................................................
+....................................................................................................
+....................................................................................................
+....................................................................................................
+....................................................................................................
+....................................................................................................
+....................................................................................................
+....................................................................................................
+....................................................................................................
+....................................................................................................
+....................................................................................................
+....................................................................................................
+....................................................................................................
+....................................................................................................
+....................................................................................................
+....................................................................................................
+....................................................................................................
+....................................................................................................
+....................................................................................................
+....................................................................................................
+....................................................................................................
+....................................................................................................
+....................................................................................................
+....................................................................................................
+....................................................................................................
+....................................................................................................
+....................................................................................................
+....................................................................................................
+....................................................................................................
+....................................................................................................
+....................................................................................................
+....................................................................................................
+....................................................................................................
+....................................................................................................
+....................................................................................................
+....................................................................................................
+....................................................................................................
+....................................................................................................
+.............................................................XXXX...................................
+.........................................................XXX.XXXX.XXX...............................
+.........................................................XXX..XX..XXX...............................
+.........................................................XX........XXX..............................
+......................................................XXX..........XXX..............................
+......................................................XX............XX..............................
+......................................................XXX..........XXX..............................
+....................................................XXX............XXX..............................
+....................................................XX..............XX..............................
+....................................................XXX.............................................
+...................................................XXX............XXX...............................
+...................................................XX..............XX...............................
+...................................................XXX............XXX...............................
+...................................................XXX..........XXX.................................
+...................................................XX...........X.X.................................
+...................................................XXX..........XXX.................................
+....................................................XXX........XXX..................................
+....................................................XX..........XX..................................
+....................................................XXX........XXX..................................
+......................................................XXX...XXX.....................................
+......................................................XX....X.X.....................................
+......................................................XXX...XXX.....................................
+..........................................................XXX.......................................
+..........................................................X.X.......................................
+..........................................................XXX.......................................
+.........................................................XX...XXX...................................
+....................................................XXX.XXX...X.X...................................
+....................................................XXX.XXX...XXX...................................
+....................................................XXX...........XXX...............................
+..................................................................X.X...............................
+..................................................................XXX...............................
+......................................................................XXX...........................
+......................................................................X.X...........................
+......................................................................XXX...........................
+..........................................................................XXX.......................
+..........................................................................X.X.......................
+..........................................................................XXX.......................
+..............................................................................XXX...................
+..............................................................................X.X...................
+..............................................................................XXX...................
+..................................................................................XXX...............
+..................................................................................X.X...............
+..................................................................................XXX...............
+......................................................................................XXX...........
+......................................................................................X.X...........
+......................................................................................XXX...........
+..........................................................................................XXX.......
+..........................................................................................X.X.......
+..........................................................................................XXX.XXXXXX
+..............................................................................................XXXXXX
+..............................................................................................X.XXXX
+..............................................................................................XXXXXX
+..............................................................................................XXXXXX
+..............................................................................................XXXXX.
+
+Vıstup:
+ooo o  o   o     XXXXXXXXXXXXXXXXX   XXXXXXXXXXXXX
+              o    XXXXXXXXXXXX          XXXXXXXXX
+                     XXXXXXXX             XXXXXXXX
+                o     XXXXXXX    o o       XXXXXXX
+                       XXXXX   o  XXX o    XXXXXXX
+XXXXXXXXXXXXXXXXXo     XXXXX     XXXXX      XXXXXX
+XXXXXXXXXXXXXXXXXX     XXXXX  o  XXXXXX  o   XXXXX
+XXXXXXXXXXXXXXXXXX     XXXXX     XXXXXXX      XXXX
+XXXXXXXXXXXXXXXXXo    XXXXX      XXXXXXXX      XXX
+XX                    XXXXX   o XXXXXXXXXX o    XX
+X     o o       o    XXXXXX    XXXXXXXXXXXX      X
+    o      o  o    XXXXXXXX    XXXXXXXXXXXXX     X
+    XXXXXXXXXXXXXXXXXXXXXXX    XXXXXXXXXXXXXo    X
+   o XXXXXXXXXXXXXXXXXXXXXX    oXXXXXXXXXXXX     X
+X     XXXXXXXXXXXXXXXXXXXXX      XXXXXXXXXXX     X
+XX     XXXXXXXXXXXXXXXXXXXX      XXXXXXXXXX      X
+XXXo     XXXXXXXXXXXXXXXXXXX    oXXXXXXXX   o   XX
+XXXX     XXXXXXXXXXXXXXXXXXXX     XXXXXXX    XXXXX
+XXXX     XXXXXX        XXXXXX   o  XXXXXX    XXXXX
+XXXX     XXXXXX  o o    XXXXXX      XXXXXX   XXXXX
+XXXXo    XXXXXX o  XX o  XXXXXXo    XXXXXX o  XXXX
+XXX      XXXXXX    XXX    o  o      XXXXXX    XXXX
+XX      XXXXXXXo   XXXX             XXXXXX    XXXX
+X      XXXXXXXX    XXXXX           XXXXXXo   XXXXX
+      XXXXXXXX     XXXXXX       XXXXXXXXX    XXXXX
+    oXXXXXXXXXo    XXXXXXXXXXXXXXXXXXXXo     XXXXX
+     XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX o   XXXXXXXX
+XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX    XXXXXXXXXX
+   o XXXXXXXXXo    XXXXXXXXXXXXXXXXX  o XXXXXXXXXX
+     XXXXXXXXX     XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+     XXXXXXXXX     XXXXXXXXXXXXXXXXX   oXXXXXXXXXX
+     XXXXXXXXX     XXXXXXXXXXXXXXXXXX    o o      
+     XXXXXXXXX o   XXXXXXXXXXXXXXXXXXX       o    
+   o XXXXXXXXX     XXXXXXXXXXXXXXXXXXXXXXXXXXXo   
+XXXXXXXXXXXXXX     XXXXXXXXXXXXXXXXXXXXXXXXXXX    
+XXXXXXXXXXXXXX   o XXXXXXXXXXXXXXXXXXXXXXXXXXXo   
+XXXXXXXXXXXXXX     XXXXXXXXXXXXXXXXXXXXXXXXXXX    
+    oXXXXXXXXX      o            XXXXXXXXXXXXX    
+     XXXXXXXXX         o         XXXXX       o    
+     XXXXXXXXX                   XXXXX            
+      XXXXXXXX           o       XXXXX     o      
+X     oXXXXXXXXXXXXXXXXXXX       XXXXX  ooXXXXXXXX
+XX       XXXXXXXXXXXXXXXXX       XXXXX  o XXXXXXXX
+XXX        XXXXXXXXXXXXXXXo      XXXXX    XXXXXXXX
+XXXX     o   XXXXXXXXXXXXX       XXXXX   oXXXXXXXX
+XXXXXX         XXXXXXXXXXXo      XXXXX    XXXXXXXX
+XXXXXXXX    o          o o       XXXXX     o      
+XXXXXXXXXX      o   o            XXXXX        o   
+XXXXXXXXXXXX                     XXXXX           o
+--------------------
+o X  XXXXXXXX   X XX  XX XXX XX XXXX    X X   XXX 
+XoXXX XXX  X  X   X   XX XX XXXXXX   XXXXX XXXXX X
+ X    XX XXXXXXXXXXXXX    XX XX X  XXXXXXX XX XX  
+X Xo X X XX XXXXXXXX X  XXXXXXX  XXXX   X    XX X 
+X  X     XXX    XX   X XXXXX  X  XX    X XX  XXXXX
+XX  Xo  XX X   XXX  XXX XXX X X  X XX XXXX XXXX XX
+X   XXXXX  XX XXX  XXX  X X   XXXX  XXX X XX XX XX
+X XXX X X XXXXXX   XXXXXXX XXX XXXX XXXXXX XX XXXX
+ X XX  XoXXXX   XXXX XX XXXXXXX    XXXXX XXXXX XXX
+   X XXX  X X XX XXXX  XXX X X X XXXXX XXXXXX XX X
+ X XXX   X XXX X       X XX  XX  X XXX  X XX XX   
+XX X    XX XX XX XXXXXXX XXX XXX X  XX XX XX X XX 
+   XXX XX Xo      X  XXXXXX X    XX X XXX   X X   
+  XX   XX X X  XX XXX  X  XX XXX  XXXX XXXXX   X  
+XXX     X     X X  XXX XXX   X    X XX XX  X  X X 
+XXXX   X   X XXX XXX X  X   XX X   XXX X  X XXXX X
+  XXXXXX X   oXX XXXX  XX  X  XXX XX X X X XX X X 
+X XX  XXXXX X X XXXXX  XX XXXXXXX  XXXX   XXXXX XX
+X XXX  XXX XXXX XXX X  X     XXX XXX   XXXXXX X XX
+XXX  XX X    X      X  X XXXXX    X X X   X X XXX 
+ X X  XXX  X  XoXX XX XX X  XXXXX X XXX  XX XXXXX 
+ XXXXX X XX  XX X X  X  XX X XXXX XX XX X  X X  XX
+XXXXXXX XX  X XX XXXXXXXXXXXXX XX XX     X  XXXXX 
+XXXXX XXXXX X  XX X XXXXXX XXX XXX XX X   XXX  XXX
+ X X   XX  X     o X  XXXXXX XXXX XXX  X XXXX  XX 
+   XXX XXX XXX XX XXX X X X  X  X  X  XX XXX X X  
+XXXXXX   X   X X X  XXXXXX XXX X XX XXXXXXX  XXXX 
+ XX X X XXX X  X  XX XX  XXXXXX  X X X   XX XX  X 
+XXXX X X XXXXXXXX  XoX  XXX   XXX XX   X XXX XXXX 
+  XX XXXX X XX X X   X XXX XX XXXX   XXXX   XXXXX 
+ X X  X X   X X XXXXXXXXX  X XXXXXX XXX XX XX  X X
+XXX  XXXX  XX XX    XXXo X   XX XX  X XX  X X   X 
+XX X X XXX  XXX X X X   X XX   XXXXXXXXX XXX XX  X
+XX X X XX X XX   X  X  XX XoXXX   XX XXXXXX  X XX 
+XXXXXX XXXX  X X  XXXXX XX XXXXXX X X X X XXXXX  X
+XXX  XXXXXXXXX XXXXXX XXXXXX X   X XXX  XXX X  X X
+ XX  XXX  XX XXXXXX XXXXXXXX XXoX   XX X   XX  X  
+ XXX XX      XX   XX XXXXX X XXXXXXX  XX    XXXX X
+XX XXXX X  X  X X   XX XX  X XX    XX XX XXXX  X X
+  XXXXX XXXX XXXXXX     X   XXXX XXo XXXX X    XXX
+  X X  XXXX  XXX XXXXXX X XXXXXXX XXX XXX   XXX XX
+XXX XXXXX  XXXX X  X X   XXX    X X X XX XXX  X XX
+XXXXX   X  XX  XX X XXX XXX X XXX    Xo X  XXXXX X
+X X   X X X XXX X  X  X  XX  XX X XXXXXXX  XXXX  X
+  XX  X X X XXX       XX  X    X XX   X XXoXXX X  
+  XXXX XX  X XXX  XXX X XX XXX      XX X   X XXX X
+XX  XXX X  XXXXXX XXXXX  XX        XX X XX  XXo XX
+XXXXX XX XX X  X   X XXX XXXX XXX XXX  XXXXXXXX X 
+ X XX  XX XXXXXXXXX X  XX X XXXX XXXXXX XX X  X   
+   XXX  X XXXX   XXXXX X XXXXXX XX XXX  XXXXXXXXXo
+--------------------
+No solution
+--------------------
